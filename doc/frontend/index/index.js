@@ -60,7 +60,7 @@
             var imagebase64 = source.split(',');
             imagebase64 = imagebase64[1];
             $.ajax({
-                    url: './image-regoition',
+                    url: './clip',
                     type: 'POST',
                     data: imagebase64
                 })
