@@ -288,7 +288,7 @@ echo | faas-cli invoke clip
 6. Repeat step 2 - step 5 
 
 ## Project Timeline
-![](gantt-chart.png)
+![](gantt-chart.PNG)
 ## Appendix
 Last Update : 08 - 05 - 2021
 
