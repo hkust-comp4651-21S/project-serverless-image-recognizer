@@ -1,0 +1,13 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://35.239.220.129:8080
+functions:
+  clip:
+    lang: python3-debian
+    handler: ./clip
+    image: kylertang618/clip:latest
+    environment:
+      read_timeout: "30s"
+      write_timeout: "30s"
+      exec_timeout: "30s"

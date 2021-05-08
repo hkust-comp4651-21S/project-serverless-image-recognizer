@@ -1,0 +1,11 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://35.239.220.129:8080
+functions:
+  index:
+    lang: python3
+    handler: ./index
+    image: kylertang618/index:latest
+    environment:
+        content_type: text/html
