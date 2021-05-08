@@ -1,7 +1,3 @@
----
-tags: COMP 4651, 4651 Project
----
-
 # COMP4651 Project
 
 Deadline: 11:59 pm, May 9 (Sunday)
@@ -12,12 +8,11 @@ Deadline: 11:59 pm, May 9 (Sunday)
 
 ---
 
-[TOC]
-
 ## Application Description
 ### Overview
 ### Architecture
-### CLIP Classification Model
+### Classification Model
+In this project, we use a deep neunral network model named Connecting Text and Images(CLIP), which is a zero-shot image classifier combining encoded text and images to aim to generalize to correctly predicting objects outside the original training set. In addition, although the model classification performance is proportional to the size of label classes, it will dramatically prolong the computation and response time if we increase the size. Therefore, we use CIFAR-100 for the testing dataset which is a subset of tiny images dataset. It consists of 60,000 testing images and 100 classes, which are suitable for our case to allow us to keep the response time within 20 seconds.
 
 ## Implementation Procedures
 
@@ -223,7 +218,7 @@ functions:
 
 ##### Copy front-end documents
 ```
-cd ~/project-serverless-image-recognizer/doc/frontend/index/
+cd ~/project-serverless-image-recognizer/src/frontend/index/
 
 cp * ~/project/frontend/index/
 ```
@@ -260,13 +255,13 @@ functions:
 ```
 ##### Copy back-end documents
 ```
-cd ~/project-serverless-image-recognizer/doc/backend/clip/
+cd ~/project-serverless-image-recognizer/src/backend/clip/
 
 cp * ~/project/backend/clip/
 ```
-##### Copy template dockerfile
+##### Copy dockerfile template
 ```
-cd ~/project-serverless-image-recognizer/doc/backend/template/python3-debian/
+cd ~/project-serverless-image-recognizer/src/backend/template/python3-debian/
 
 cp * ~/project/backend/template/python3-debian/
 ```
@@ -290,7 +285,7 @@ echo | faas-cli invoke clip
 3. Upload an image from `hkust-comp4651-21S/project-serverless-image-recognizer/test/` OR anywhere
 4. Test the result
 5. Click `GO BACK`
-6. Repeat 2-5 
+6. Repeat step 2 - step 5 
 
 ## Project Timeline
 ```mermaid
@@ -298,17 +293,23 @@ gantt
     title Schedule 
     axisFormat  %m-%d
     section Specification
-    Reading Project Document : 2021-03-08, 2d
-    OpenFaaS Workshop : 2021-03-09, 3d
+    Reading Project Document : 2021-04-08, 2d
+    OpenFaaS Workshop : 2021-04-09, 3d
     section Development
-    Configuring Environment : d1, 2021-03-09, 2d
+    Configuring Environment : d1, 2021-04-09, 2d
     Coding: d2, after d1, 3d
-    Testing: after d2, 1d
+    Testing: d3, after d2, 1d
     section Documentation
-    Report: 2021-05-08, 2d
+    Report: after d3, 2d
 ```
 ## Appendix
 Last Update : 08 - 05 - 2021
+
+A. Ellis, K. Fukuyama, L. Roesler, V. Singh and A. Hey, "openfaas/workshop", GitHub, 2021. [Online]. Available: https://github.com/openfaas/workshop. [Accessed: 09- Apr- 2021].
+
+A. Radford, I. Sutskever, J. Kim, G. Krueger and S. Agarwal, "CLIP: Connecting Text and Images", OpenAI, 2021. [Online]. Available: https://openai.com/blog/clip/. [Accessed: 12- Apr- 2021].
+
+##### tags: `COMP 4651` `4651 Project`
 
 
 
