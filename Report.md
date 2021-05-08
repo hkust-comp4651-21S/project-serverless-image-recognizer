@@ -14,19 +14,37 @@ Deadline: 11:59 pm, May 9 (Sunday)
 
 [TOC]
 
+## Application Description
+### Overview
+### Architecture
+### CLIP Classification Model
+
 ## Implementation Procedures
 
 ### Pre-preparation
 
 #### Sign up account
+* [Amazon Web Services](https://aws.amazon.com/tw/premiumsupport/knowledge-center/create-and-activate-aws-account/)
 * [Docker Hub](https://hub.docker.com/)
 * [Google Cloud](https://cloud.google.com/free/)
 
 #### Environment Setup
-**Google Cloud**
+##### Google Cloud
 
-* [Creating Your Project](https://cloud.google.com/appengine/docs/standard/nodejs/building-app/creating-project)
+* [Creating Project](https://cloud.google.com/appengine/docs/standard/nodejs/building-app/creating-project)
 * [Enable billing for the project](https://cloud.google.com/billing/docs/how-to/modify-project)
+
+##### Amazon Web Services
+* [Create and launch EC2 instance](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html)
+
+#### Development Environment
+##### Linux Server
+* System : `Ubuntu Server 18.04 LTS (HVM),EBS General Purpose (SSD)`
+* Instance Type : `t3.micro`
+* Volume size : `16 GiB`
+##### SSH Client
+* Software : Visual Studio Code (1.54)
+
 
 ### Prepare for OpenFaaS
 
@@ -154,7 +172,7 @@ PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-a
 echo -n $PASSWORD | faas-cli login --username admin --password-stdin
 ```
 
-### Create functions
+### Create Functions
 #### Clone project repository
 *Through HTTPS*
 ```
@@ -265,7 +283,7 @@ faas-cli deploy -f clip.yml
 # ignore any error
 echo | faas-cli invoke clip
 ```
-### Test web application
+### Test Web Application
 1. Open web page on : 
 `http://<external ip>:8080/function/index`
 2. Click `GET START`
@@ -273,6 +291,25 @@ echo | faas-cli invoke clip
 4. Test the result
 5. Click `GO BACK`
 6. Repeat 2-5 
+
+## Project Timeline
+```mermaid
+gantt
+    title Schedule 
+    axisFormat  %m-%d
+    section Specification
+    Reading Project Document : 2021-03-08, 2d
+    OpenFaaS Workshop : 2021-03-09, 3d
+    section Development
+    Configuring Environment : d1, 2021-03-09, 2d
+    Coding: d2, after d1, 3d
+    Testing: after d2, 1d
+    section Documentation
+    Report: 2021-05-08, 2d
+```
+## Appendix
+Last Update : 08 - 05 - 2021
+
 
 
 
