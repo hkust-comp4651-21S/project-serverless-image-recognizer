@@ -14,22 +14,25 @@ Deadline: 11:59 pm, May 9 (Sunday)
 
 [TOC]
 
-## Pre-preparation
+## Implementation Procedures
 
-### Sign up account
+### Pre-preparation
+
+#### Sign up account
 * [Docker Hub](https://hub.docker.com/)
 * [Google Cloud](https://cloud.google.com/free/)
 
-### Environment Setup
+#### Environment Setup
 **Google Cloud**
-* Create a project
-* Enable billing for the project
 
-## Prepare for OpenFaaS
+* [Creating Your Project](https://cloud.google.com/appengine/docs/standard/nodejs/building-app/creating-project)
+* [Enable billing for the project](https://cloud.google.com/billing/docs/how-to/modify-project)
 
-### Install Docker CE
+### Prepare for OpenFaaS
 
-**Set up the repository**
+#### Install Docker CE
+
+##### Set up the repository
 
 ```
 sudo apt-get update
@@ -48,27 +51,27 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
-**Install Docker Engine**
+##### Install Docker Engine
 ```
 sudo apt-get update
  
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
-**Log into Docker Hub**
+##### Log into Docker Hub
 ```
 export OPENFAAS_PREFIX="<Docker Hub username>"
 
 sudo docker login
 ```
 
-### Install OpenFaas CLI
+#### Install OpenFaas CLI
 ```
 curl -sLSf https://cli.openfaas.com | sudo sh
 ```
 
-## Set-up OpenFaaS with Kubernetes
-### Install kubectl
+### Set-up OpenFaaS with Kubernetes
+#### Install kubectl
 ```
 export VER=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 
@@ -78,8 +81,8 @@ chmod +x kubectl
 
 mv kubectl /usr/local/bin/
 ```
-### Create a remote cluster on Google Kubernetes Engine
-**Install Google Cloud SDK**
+#### Create a remote cluster on Google Kubernetes Engine
+##### Install Google Cloud SDK
 ```
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 
@@ -90,7 +93,7 @@ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyr
 sudo apt-get update && sudo apt-get install google-cloud-sdk
 ```
 
-**Configure project**
+##### Configure project
 ```
 gcloud init
 
@@ -101,17 +104,17 @@ gcloud config set compute/region <region>
 gcloud config set compute/zone <zone>
 ```
 
-**Enable the Kubernetes service**
+##### Enable the Kubernetes service
 ```
 gcloud services enable container.googleapis.com
 ```
 
-**Install kubectl**
+##### Install kubectl
 ```
 gcloud components install kubectl
 ```
 
-**Create a Kubernetes cluster**
+##### Create a Kubernetes cluster
 ```
 gcloud container clusters create openfaas \
 --zone=<zone> \
@@ -121,28 +124,28 @@ gcloud container clusters create openfaas \
 --no-enable-cloud-logging
 ```
 
-**Set up credentials for kubectl**
+##### Set up credentials for kubectl
 ```
 gcloud container clusters get-credentials openfaas
 ```
 
-**Create a cluster admin role binding**
+##### Create a cluster admin role binding
 ```
-kubectl create clusterrolebinding "cluster-admin-$(whoami)" \
+sudo kubectl create clusterrolebinding "cluster-admin-$(whoami)" \
 --clusterrole=cluster-admin \
 --user="$(gcloud config get-value core/account)"
 ```
 
-### Install OpenFaaS with arkade
-**Install arkade**
+#### Install OpenFaaS with arkade
+##### Install arkade
 ```
 curl -SLsf https://dl.get-arkade.dev/ | sudo sh
 ```
-**Get external ip**
+##### Get external ip
 ```
-kubectl get svc -o wide gateway-external -n openfaas
+sudo kubectl get svc -o wide gateway-external -n openfaas
 ```
-**Log in**
+##### Log in
 ```
 export OPENFAAS_URL="<external ip>"
 
@@ -150,6 +153,129 @@ PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-a
 
 echo -n $PASSWORD | faas-cli login --username admin --password-stdin
 ```
+
+### Create functions
+#### Clone project repository
+*Through HTTPS*
+```
+cd ~
+
+git clone https://github.com/hkust-comp4651-21S/project-serverless-image-recognizer.git
+```
+
+*Through SSH*
+* Follow the steps: [Connecting to GitHub with SSH](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
+```
+cd ~
+
+git clone git@github.com:hkust-comp4651-21S/project-serverless-image-recognizer.git
+```
+
+#### Create working directories
+```
+cd ~
+
+mkdir -p project \
+   && cd project
+   
+mkdir frontend backend
+```
+
+#### Create front-end interface function
+##### Scaffold a Python 3 function
+```
+cd ~/project/frontend
+
+sudo faas-cli new --lang python3 index --prefix="<docker username>"
+```
+##### Edit index.yml
+```yaml=
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://<external ip>:8080
+functions:
+  index:
+    lang: python3
+    handler: ./index
+    image: <docker username>/index:latest
+    environment:
+        content_type: text/html
+```
+
+##### Copy front-end documents
+```
+cd ~/project-serverless-image-recognizer/doc/frontend/index/
+
+cp * ~/project/frontend/index/
+```
+##### Deploy front-end interface function
+```
+cd ~/project/frontend/
+
+sudo faas-cli up -f index.yml
+
+faas-cli deploy -f index.yml
+```
+#### Create back-end interface function
+##### Scaffold a Python 3(debian) function
+```
+cd ~/project/backend/
+
+sudo faas-cli new --lang python3-debian clip --prefix="<docker username>"
+```
+##### Edit clip.yml
+```yaml=
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://<external ip>:8080
+functions:
+  clip:
+    lang: python3-debian
+    handler: ./clip
+    image: <docker username>/clip:latest
+  environment:
+    read_timeout: "60s"
+    write_timeout: "60s"
+    exec_timeout: "60s"
+```
+##### Copy back-end documents
+```
+cd ~/project-serverless-image-recognizer/doc/backend/clip/
+
+cp * ~/project/backend/clip/
+```
+##### Copy template dockerfile
+```
+cd ~/project-serverless-image-recognizer/doc/backend/template/python3-debian/
+
+cp * ~/project/backend/template/python3-debian/
+```
+##### Deploy back-end interface function
+```
+cd ~/project/backend/
+
+sudo faas-cli up -f clip.yml
+
+faas-cli deploy -f clip.yml
+```
+##### Initialize back-end interface function
+```
+# ignore any error
+echo | faas-cli invoke clip
+```
+### Test web application
+1. Open web page on : 
+`http://<external ip>:8080/function/index`
+2. Click `GET START`
+3. Upload an image from `hkust-comp4651-21S/project-serverless-image-recognizer/test/` OR anywhere
+4. Test the result
+5. Click `GO BACK`
+6. Repeat 2-5 
+
+
+
 
 
 
