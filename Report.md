@@ -288,20 +288,7 @@ echo | faas-cli invoke clip
 6. Repeat step 2 - step 5 
 
 ## Project Timeline
-```mermaid
-gantt
-    title Schedule 
-    axisFormat  %m-%d
-    section Specification
-    Reading Project Document : 2021-04-08, 2d
-    OpenFaaS Workshop : 2021-04-09, 3d
-    section Development
-    Configuring Environment : d1, 2021-04-09, 2d
-    Coding: d2, after d1, 3d
-    Testing: d3, after d2, 1d
-    section Documentation
-    Report: after d3, 2d
-```
+![](gantt-chart.png)
 ## Appendix
 Last Update : 08 - 05 - 2021
 
