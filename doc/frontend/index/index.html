@@ -1,0 +1,79 @@
+<html>
+
+<head>
+    <noscript>Sorry, your browser does not support JavaScript!</noscript>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" id="bootstrap-css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<title>COMP 4651 Project - Serverless Image Recognizer </title>
+
+<body>
+    <div class="overlay"></div>
+    <div class="index">
+        <div id="carousel-container" class="carousel fade-carousel slide" data-touch="false" data-interval="false" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="hero">
+                        <hgroup>
+                            <h2>Serverless</h2>
+                            <h2>Image Recognizer</h2>
+                            <p>
+                                <h3>COMP 4651 Project</h3>
+                        </hgroup>
+                        <button id="start-btn" class="btn btn-hero btn-lg" role="button">GET START</button>
+                    </div>
+                </div>
+                <div class="file-container carousel-item">
+                    <div class="file-wrapper">
+                        <div hidden id="preloader">
+                            <div id="loader"></div>
+                        </div>
+                        <input class="file-input" id="js-file-input" type="file">
+                        <div class="file-content">
+                            <div class="file-infos">
+                                <p class="file-icon">
+                                    <i class="fas fa-file-upload fa-7x"></i>
+                                    <span class="icon-shadow"></span>
+                                    <span>Click to browse
+                                        <span class="has-drag"> or drop file here</span>
+                                    </span>
+                                </p>
+                            </div>
+                            <p class="file-name" id="js-file-name">No file selected</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div id="output">
+                        <div class="file-output">
+                            <img id="file-output" class="img-fluid img-thumbnail rounded mx-auto d-block" />
+                        </div>
+                        <div class="predict-output">
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Top</th>
+                                        <th scope="col">Prediction</th>
+                                        <th scope="col">Confidence</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="reload">
+                            <button id="reload-btn" class="btn btn-hero btn-lg" role="button">Go Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
