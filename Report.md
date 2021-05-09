@@ -1,4 +1,4 @@
-# COMP4651 Project
+# COMP4651 Project - Serverless Image Recognizer
 
 Deadline: 11:59 pm, May 9 (Sunday)
 
