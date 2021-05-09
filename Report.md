@@ -10,11 +10,10 @@ Deadline: 11:59 pm, May 9 (Sunday)
 
 ## Application Description
 Application link : [http://35.239.220.129:8080/function/index](http://35.239.220.129:8080/function/index)
-
 ### Overview
 ### Architecture
 ### Classification Model
-In this project, we use a deep neunral network model named Connecting Text and Images(CLIP), which is a zero-shot image classifier combining encoded text and images to aim to generalize to correctly predicting objects outside the original training set. In addition, although the model classification performance is proportional to the size of label classes, it will dramatically prolong the computation and response time if we increase the size. Therefore, we use CIFAR-100 for the testing dataset which is a subset of tiny images dataset. It consists of 60,000 testing images and 100 classes, which are suitable for our case to allow us to keep the response time within 20 seconds.
+In this project, we use a deep neural network model named Connecting Text and Images(CLIP), which is a zero-shot image classifier combining encoded text and images to aim to generalize to correctly predicting objects outside the original training set. In addition, although the model classification performance is proportional to the size of label classes, it will dramatically prolong the computation and response time if we increase the size. Therefore, we use CIFAR-100 for the testing dataset which is a subset of tiny images dataset. It consists of 60,000 testing images and 100 classes, which are suitable for our case to allow us to keep the response time within 20 seconds.
 
 ## Implementation Procedures
 
