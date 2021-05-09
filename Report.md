@@ -15,7 +15,7 @@ Application link : [http://35.239.220.129:8080/function/index](http://35.239.220
 The is a web application to perform image recognition for classification. The backend demonstrates how to use OPENFAAS to maintain the web function and the python classification model. The workflow processes the image upload to the web service and copies the image to the python function to perform the classification process. It then returns the classification label to the web function and responds to the request from the browser.
 
 This repository contains sample code for all the OPENFAAS functions. The font-end repository contains the web application code and the back-end repository mainly contains the python code for image processing. The workflow of the OPENFAAS is depicted as follows.
-![](workflow.jpg.PNG)
+![](workflow.jpg)
 ### Architecture
 1. A web request is handled by the OPENFAAS maintaining with the google cloud Kubernetes.
 2. An image is uploaded and handled by the front-end (/index) OPENFAAS function.
