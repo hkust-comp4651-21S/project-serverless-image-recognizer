@@ -9,6 +9,8 @@ Deadline: 11:59 pm, May 9 (Sunday)
 ---
 
 ## Application Description
+Application link : [http://35.239.220.129:8080/function/index](http://35.239.220.129:8080/function/index)
+
 ### Overview
 ### Architecture
 ### Classification Model
