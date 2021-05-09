@@ -5,13 +5,23 @@ Deadline: 11:59 pm, May 9 (Sunday)
 |Name|Student ID|Email|
 |-|-|-|
 |Kyler, Tang Chun Yi|2061 9766|cytangao@connect.ust.hk|
+|      Chan Yui Ming|2061 9986|ymchanam@connect.ust.hk|
 
 ---
 
 ## Application Description
 Application link : [http://35.239.220.129:8080/function/index](http://35.239.220.129:8080/function/index)
 ### Overview
+The is a web application to perform image recognition for classification. The backend demonstrates how to use OPENFAAS to maintain the web function and the python classification model. The workflow processes the image upload to the web service and copies the image to the python function to perform the classification process. It then returns the classification label to the web function and responds to the request from the browser.
+
+This repository contains sample code for all the OPENFAAS functions. The font-end repository contains the web application code and the back-end repository mainly contains the python code for image processing. The workflow of the OPENFAAS is depicted as follows.
+![](workflow.jpg.PNG)
 ### Architecture
+1. A web request is handled by the OPENFAAS maintaining with the google cloud Kubernetes.
+2. An image is uploaded and handled by the front-end (/index) OPENFAAS function.
+3. The front-end function triggers the handler of the back-end OPENFAAS function.
+4. The back-end function performs the image recognition by the CIFAR100 model.
+
 ### Classification Model
 In this project, we use a deep neural network model named Connecting Text and Images(CLIP), which is a zero-shot image classifier combining encoded text and images to aim to generalize to correctly predicting objects outside the original training set. In addition, although the model classification performance is proportional to the size of label classes, it will dramatically prolong the computation and response time if we increase the size. Therefore, we use CIFAR-100 for the testing dataset which is a subset of tiny images dataset. It consists of 60,000 testing images and 100 classes, which are suitable for our case to allow us to keep the response time within 20 seconds.
 
